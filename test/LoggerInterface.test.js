@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
-describe('AucEngine', () => {
+describe('LoggerInterface', () => {
   let owner;
   let demo;
 
