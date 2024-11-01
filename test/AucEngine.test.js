@@ -22,6 +22,10 @@ describe('AucEngine', () => {
     return (await ethers.provider.getBlock(bn)).timestamp;
   }
 
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   describe('createAuction', () => {
     it('creates an auction correctly', async () => {
       const duration = 60;
@@ -36,9 +40,6 @@ describe('AucEngine', () => {
     });
   });
 
-  function delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
   describe('buy', () => {
     it('allows to buy', async () => {
       await auct

@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-
 contract AucEngine {
   address public owner;
   uint constant DURATION = 2 days; // 2 * 24 * 60 * 60
@@ -24,7 +23,6 @@ contract AucEngine {
   event AuctionCreated(uint index, string itemName, uint startingPrice, uint duration);
   
   event AuctionEnded(uint index, uint finalPrice, address winner);
-
 
   constructor() {
     owner = msg.sender;
@@ -60,7 +58,6 @@ contract AucEngine {
     return cAuction.startingPrice - discount;
   }
 
-
   function buy(uint index) external payable {
     Auction storage cAuction = auctions[index];
     require(!cAuction.stopped, "Auction stopped");
@@ -74,14 +71,12 @@ contract AucEngine {
       payable(msg.sender).transfer(refund);
     }
 
-    cAuction.seller.transfer(
-      cPrice - ((cPrice * FEE) / 100)
-      // analogie Math.floor((cPrice * FEE) / 100)
-    );
+    unchecked {
+      cAuction.seller.transfer(
+        cPrice - ((cPrice * FEE) / 100)
+      );
+    }
 
     emit AuctionEnded(index, cPrice, msg.sender);
   }
-
-
-
 }
